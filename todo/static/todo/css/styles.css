@@ -1,0 +1,77 @@
+:root{
+    --roboto: 'Roboto', sans-serif;
+    --lato: 'Lato', sans-serif;
+}
+
+/* navbar  */
+
+body header nav{
+    font: normal 500 17px/20px var(--roboto);
+}
+
+body header nav .welcome-user{
+    color: #F93104;
+    font: normal 500 17px/20px var(--lato);
+}
+
+body header nav .welcome-user .username{
+    color: #04AFF9;
+}
+
+body header nav .nav-item form .logout{
+    background: none;
+    border: none;
+}
+
+
+/* footer area */
+
+footer.footer-area {
+    background: #F8F8F8;
+    padding: 2rem 0;
+}
+
+footer.footer-area .container .social {
+    margin-bottom: 2rem;
+}
+
+footer.footer-area .container .social h5 {
+    font: normal 200 20px/25px var(--roboto);
+    margin-bottom: 1rem;
+}
+
+footer.footer-area .container .social a {
+    padding-right: 1rem;
+}
+
+footer.footer-area .container .social a img {
+    width: 40px;
+}
+
+footer.footer-area .container .copyrights .para {
+    margin-bottom: -1rem;
+    font: normal 150 14px/25px var(--lato);
+}
+
+/* banner area */
+.site-main .about-area{
+    padding: 5rem 1rem;
+}
+
+.site-main .about-area .about-title h2 span{
+    font: normal bold 30px/ 50px var(--roboto);
+    letter-spacing: 5px;
+}
+
+.site-main .about-area .about-title .paragraph p{
+    font: normal lighter 20px/ 25px var(--lato); 
+}
+
+.site-main .about-area .buttons a{
+    font: normal 15px var(--roboto);
+    display: flexbox;
+}
+
+
+
+

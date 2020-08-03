@@ -1,0 +1,31 @@
+{% extends 'todo/base.html' %}
+{% load static %}
+{% block content %}
+    <main class="viewtodo">
+        <div class="container">
+            {% if message %}
+                <div class="alert alert-danger text-center" role="alert">
+                    {{message}}
+                </div>
+            {% endif %}
+            <form action="" method="POST" class="container viewtodo-form">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" value="Save" class="btn btn-primary text-uppercase">
+            </form>
+            <div class="buttons">
+                <form action="{% url 'completed_todo' instance.id %}" method= "POST" class="container">
+                    {% csrf_token %}
+                    <input type="submit" value="Completed" class="btn btn-success text-uppercase">
+                </form>
+                <form action="{% url 'delete_todo' instance.id %}" method= "POST" class="container">
+                    {% csrf_token %}
+                    <input type="submit" value="Delete" class="btn btn-danger text-uppercase">
+                </form>
+            </div>
+            <div class="container-fluid about-image">
+                <img src="{% static 'todo/images/publish.png' %}" alt="current todo banner" class="img-fluid">
+            </div>
+        </div>
+    </main>
+{% endblock %}

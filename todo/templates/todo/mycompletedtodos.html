@@ -1,0 +1,54 @@
+{% extends 'todo/base.html' %}
+{% load static %}
+{% block content %}
+<main class="completed-todos">
+    <div class="container">
+        <div class="page-title text-center">
+            <h1 class="text-uppercase">Completed todos</h1>
+        </div>
+        {% if not todos %}
+            <div class="container-fluid about-image text-center">
+                <img src="{% static 'todo/images/notfinished.png' %}" alt="current todo banner" class="img-fluid">
+            </div>
+            <div class="alert alert-warning text-center" role="alert">
+                Looks like you don't have any completed todos yet
+            </div>
+            <div class="pending-todos text-center">
+                <a href="{% url 'current_todos' %}" class="btn-link">My pending todos</a>
+            </div>
+        {% else %}
+            <div class="list-group">
+                {% for todo in todos %}
+                    <div class="list-group-item list-group-item-action">
+                        <a href="#" class="btn-link">
+                            <h3 class="todo-title">
+                                {{todo.title}}
+                                {% if todo.important %}
+                                <span class="badge badge-danger align-top">important</span>
+                                {% endif %}
+                            </h3>
+                        </a>
+                        {% if todo.memo %}
+                                <h4 class="memo">{{todo.memo}}</h4>
+                        {% endif %}
+                        <div class="dates">
+                            <h5 class="date">start: {{todo.created|date:"j M Y g:i A"}}</h5>
+                            <h5 class="date">finish: {{todo.datecompleted|date:"j M Y g:i A"}}</h5>
+                        </div>
+                        <div class="btn-group" role="group" aria-label="button group">
+                            <form action="{% url 'unfinish_todo' todo.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-success text-uppercase">unfinish</button>
+                            </form>
+                            <form action="{% url 'delete_todo_completed' todo.id %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" class="btn btn-danger text-uppercase">Delete</button>
+                            </form>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    </div>
+</main>
+{% endblock %}

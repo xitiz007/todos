@@ -1,0 +1,34 @@
+:root{
+    --roboto: 'Roboto', sans-serif;
+    --lato: 'Lato', sans-serif;
+}
+
+main.viewtodo{
+    padding-top: 8rem;
+}
+
+main.viewtodo form.viewtodo-form textarea{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+}
+
+main.viewtodo form{
+    font: normal 400 18px var(--roboto);
+}
+
+main.viewtodo .alert{
+    margin-bottom: 2rem;
+}
+
+main.viewtodo .buttons{
+    white-space: nowrap;
+    padding: 2rem 0;
+}
+
+main.viewtodo .buttons form{
+    display: inline-block;
+    width: 120px;
+}
+

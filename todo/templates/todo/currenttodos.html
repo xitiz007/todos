@@ -1,0 +1,63 @@
+{% extends 'todo/base.html' %}
+{% load static %}
+
+{% block content %}
+    <main class="mytodos">
+        <div class="container">
+            <div class="page-title text-center">
+                <h1 class="text-uppercase">Pending todos</h1>
+            </div>
+            {% if not todos %}
+                <div class="container-fluid about-image">
+                    <img src="{% static 'todo/images/currenttodo.png' %}" alt="current todo banner" class="img-fluid">
+                </div>
+                <div class="alert alert-warning text-center" role="alert">
+                    Looks like you don't have any pending todos yet
+                </div>
+                <div class="text-center">
+                    <a href="{% url 'create' %}">create new todo</a>
+                </div>
+            {% else %}
+                <div class="list-group">
+                    {% for todo in todos %}
+                        <div class="list-group-item list-group-item-action">
+                            <a href="{% url 'view_todo' todo.id %}" class="btn-link">
+                            <h3 class="todo-title">
+                                {{todo.title}}
+                                {% if todo.important %}
+                                <span class="badge badge-danger align-top">important</span>
+                                {% endif %}
+                            </h3>
+                            </a>
+                            {% if todo.memo %}
+                                <h4 class="memo">{{todo.memo|truncatechars:20}}</h4>
+                            {% endif %}
+                            <h5 class="date-created">{{todo.created|date:"j M Y g:i A"}}</h5>
+                            <div class="btn-group" role="group" aria-label="button group">
+                                <button type="button" class="btn btn-primary text-uppercase" onclick="window.location.href='{% url 'view_todo' todo.id %}';">View</button>
+                                <form action="{% url 'completed_todo' todo.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-success text-uppercase">completed</button>
+                                </form>
+                                <form action="{% url 'delete_todo' todo.id %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger text-uppercase">Delete</button>
+                                </form>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="create-todo text-center">
+                <a href="{% url 'create' %}" class="text-decoration-none">Create todo</a>
+                </div>
+                <div class="container">
+                    <div class="col-lg-6 col-md-12">
+                        <div class="about-image">
+                            <img src="{% static 'todo/images/phonelist.png' %}" alt="task list" class="img-fluid">
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+    </main>
+
+{% endblock %}

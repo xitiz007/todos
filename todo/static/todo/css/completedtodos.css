@@ -1,0 +1,55 @@
+:root{
+    --roboto: 'Roboto', sans-serif;
+    --lato: 'Lato', sans-serif;
+}
+
+main.completed-todos{
+    padding-top: 6rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 6rem;
+}
+
+main.completed-todos .page-title h1{
+    font: normal 500 33px var(--roboto);
+}
+
+main.completed-todos .about-image{
+    margin: 1.5rem 0.8rem;
+}
+
+main.completed-todos .pending-todos{
+    padding-top: 1rem;
+}
+
+main.completed-todos .container .list-group{
+    margin: 3rem 0;
+}
+
+main.completed-todos .container .list-group .todo-title{
+    font: normal 500 30px var(--roboto);
+}
+
+main.completed-todos .container .list-group .todo-title span{
+    font-size: 10px;
+}
+
+main.completed-todos .container .list-group .memo{
+    font: normal 400 22px var(--lato);
+}
+
+main.completed-todos .container .list-group .dates{
+    margin-top: 1rem;
+}
+
+main.completed-todos .container .list-group .date{
+    font: normal 300 15px var(--lato);
+}
+
+main.completed-todos .container .list-group .btn-group{
+    margin: 1.5rem 0;
+}
+
+main.completed-todos .container .list-group button{
+    margin-right: 1rem;
+}

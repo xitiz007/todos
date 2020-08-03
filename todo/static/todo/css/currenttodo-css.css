@@ -1,0 +1,68 @@
+/* mytodos */
+:root{
+    --roboto: 'Roboto', sans-serif;
+    --lato: 'Lato', sans-serif;
+}
+
+main.mytodos{
+    padding-top: 6rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    padding-bottom: 8rem;
+}
+
+main.mytodos .page-title h1{
+    margin-top: 1rem;
+    font: normal 500 35px var(--roboto);
+}
+
+main.mytodos .alert-info{
+    margin: 4rem 0;
+}
+
+main.mytodos .container .list-group{
+    margin: 3rem 0;
+}
+
+main.mytodos .container .list-group .todo-title{
+    font: normal 500 30px var(--roboto);
+}
+
+main.mytodos .container .list-group .todo-title span{
+    font-size: 10px;
+}
+
+main.mytodos .container .list-group .memo{
+    font: normal 400 22px var(--lato);
+}
+
+main.mytodos .container .list-group .date-created{
+    font: normal 300 15px var(--lato);
+}
+
+main.mytodos .container .list-group .btn-group{
+    margin: 1.5rem 0;
+}
+
+main.mytodos .container .create-todo{
+    padding-bottom: 1rem;
+}
+
+@media screen and (max-width: 1920px) {
+    main.mytodos .container .list-group .btn-group button{
+        margin-right: 0.7rem;
+    }
+}
+
+@media screen and (max-width: 370px) {
+    main.mytodos .container .list-group .btn-group button{
+        margin-right: 0;
+    }
+}
+
+@media screen and (max-width: 350px) {
+    main.mytodos .container .list-group .btn-group button{
+        font-size: 12px;
+        margin-right: 0;
+    }
+}

@@ -1,0 +1,25 @@
+{% extends 'todo/base.html' %}
+{% load static %}
+{% block content %}
+    <main class="login-user">
+        <div class="container">
+            <div class="text-center">
+                <h1 class="page-title text-uppercase">user login</h1>
+            </div>
+            {% if message %}
+                <div class="alert alert-danger text-center" role="alert">
+                    {{message}}
+                </div>
+            {% endif %}
+            <form action="" method="POST" class="container">
+                {% csrf_token %}
+                {{form.as_p}}
+                <input type="submit" value="sign in" class="btn btn-primary text-uppercase">
+            </form>
+            <a href="{% url 'signup' %}" class="container">create account</a>
+            <div class="container-fluid about-image">
+                <img src="{% static 'todo/images/login.png' %}" alt="current todo banner" class="img-fluid">
+            </div>
+        </div>
+    </main>
+{% endblock %}

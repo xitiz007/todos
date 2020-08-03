@@ -1,0 +1,32 @@
+:root{
+    --roboto: 'Roboto', sans-serif;
+    --lato: 'Lato', sans-serif;
+}
+
+main.create-todo{
+    padding-top: 6rem;
+
+}
+
+main.create-todo .page-title{
+    font: normal 500 35px var(--roboto);
+}
+
+main.create-todo .alert{
+    margin-top: 2rem;
+}
+
+main.create-todo form{
+    margin: 4rem 0;
+}
+
+main.create-todo form{
+    font: normal 400 18px var(--roboto);
+}
+
+main.create-todo form textarea{
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    width: 100%;
+}

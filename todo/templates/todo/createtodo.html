@@ -1,0 +1,24 @@
+{% extends 'todo/base.html' %}
+{% load static %}
+{% block content %}
+    <main class="create-todo">
+        <div class="container">
+            <div class="text-center">
+                <h1 class="page-title text-uppercase">create todo</h1>
+            </div>
+            {% if message %}
+                <div class="alert alert-danger text-center" role="alert">
+                    {{message}}
+                </div>
+            {% endif %}
+            <form action="" method="POST" class="container">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="create" class="btn btn-primary text-uppercase">
+            </form>
+            <div class="container-fluid about-image">
+                <img src="{% static 'todo/images/addtodo.png' %}" alt="current todo banner" class="img-fluid">
+            </div>
+        </div>
+    </main>
+{% endblock %}

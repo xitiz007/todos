@@ -1,0 +1,24 @@
+:root{
+    --roboto: 'Roboto', sans-serif;
+    --lato: 'Lato', sans-serif;
+}
+
+main.login-user{
+    padding-top: 6rem;
+}
+
+main.login-user .page-title{
+    font: normal 500 35px var(--roboto);
+}
+
+main.login-user .alert{
+    margin-top: 2rem;
+}
+
+main.login-user form{
+    margin: 4rem 0;
+}
+
+main.login-user form{
+    font: normal 400 18px var(--roboto);
+}

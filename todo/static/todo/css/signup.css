@@ -1,0 +1,49 @@
+:root{
+    --roboto: 'Roboto', sans-serif;
+    --lato: 'Lato', sans-serif;
+}
+
+main.signup-user{
+    padding-top: 7rem;
+}
+
+main.signup-user .page-title{
+    font: normal 500 32px var(--roboto);
+}
+
+main.signup-user .alert{
+    margin-top: 2rem;
+}
+
+main.signup-user form{
+    margin: 3rem 0;
+}
+
+main.signup-user form{
+    font: normal 400 18px var(--roboto);
+}
+
+main.signup-user form .helptext{
+    font: normal 200 12px var(--lato);
+    display: block;
+    padding-top: 0.7rem;
+}
+
+main.signup-user form ul li{
+    font: normal 200 12px var(--lato);
+}
+
+
+
+@media screen and (max-width: 1920px) {
+    main.signup-user{
+        padding-bottom: 10rem;
+    }
+}
+
+@media screen and (max-width: 991px) {
+    main.signup-user{
+        padding-bottom: 0rem;
+    }
+}
+
