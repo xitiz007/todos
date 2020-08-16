@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Todo
+from .models import Todo, UserProfile
 
 class TodoAdmin(admin.ModelAdmin):
     readonly_fields = ('created',)
@@ -7,3 +7,4 @@ class TodoAdmin(admin.ModelAdmin):
 # Register your models here.
 
 admin.site.register(Todo, TodoAdmin)
+admin.site.register(UserProfile)

@@ -7,12 +7,13 @@
             <h1 class="text-uppercase">Completed todos</h1>
         </div>
         {% if not todos %}
-            <div class="container-fluid about-image text-center">
-                <img src="{% static 'todo/images/notfinished.png' %}" alt="current todo banner" class="img-fluid">
-            </div>
             <div class="alert alert-warning text-center" role="alert">
                 Looks like you don't have any completed todos yet
             </div>
+            <div class="container-fluid about-image text-center">
+                <img src="{% static 'images/notfinished.png' %}" alt="current todo banner" class="img-fluid">
+            </div>
+
             <div class="pending-todos text-center">
                 <a href="{% url 'current_todos' %}" class="btn-link">My pending todos</a>
             </div>
@@ -47,6 +48,9 @@
                         </div>
                     </div>
                 {% endfor %}
+            </div>
+            <div class="container-fluid about-image text-center">
+                <img src="{% static 'images/notfinished.png' %}" alt="current todo banner" class="img-fluid">
             </div>
         {% endif %}
     </div>

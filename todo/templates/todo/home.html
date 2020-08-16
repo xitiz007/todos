@@ -7,7 +7,7 @@
                 <div class="row">
                     <div class="col-lg-6 col-md-12">
                         <div class="about-image">
-                            <img src="{% static 'todo/images/bannertodo.jpg' %}" alt="todo banner" class="img-fluid">
+                            <img src="{% static 'images/bannertodo.jpg' %}" alt="todo banner" class="img-fluid">
                         </div>
                     </div>
                     <div class="col-lg-6 col-md-12 about-title">
@@ -21,12 +21,12 @@
                         </div>
                         <div class="buttons">
                             {% if user.is_authenticated %}
-                                <a class="btn btn-link text-uppercase" href="{% url 'create' %}">Create todo</a>
-                                <a class="btn btn-link text-uppercase" href="{% url 'current_todos' %}">pending Todos</a>
-                                <a class="btn btn-link text-uppercase" href= "{% url 'completed_todos' %}">Completed Todos</a>
+                                <a class="btn btn-primary btn-lg btn-block text-uppercase" href="{% url 'create' %}">Create todo</a>
+                                <a class="btn btn-warning btn-lg btn-block text-uppercase" href="{% url 'current_todos' %}">pending Todos</a>
+                                <a class="btn btn-success btn-lg btn-block text-uppercase" href= "{% url 'completed_todos' %}">Completed Todos</a>
                             {% else %}
-                                <a class="btn btn-link text-uppercase" href="{% url 'login' %}">Sign in</a>
-                                <a class="btn btn-link text-uppercase" href= "{% url 'signup' %}">Sign up</a>
+                                <a class="btn btn-primary btn-lg btn-block text-uppercase" href="{% url 'login' %}">Sign in</a>
+                                <a class="btn btn-success btn-lg btn-block text-uppercase" href= "{% url 'signup' %}">Sign up</a>
                             {% endif %}
 
                         </div>

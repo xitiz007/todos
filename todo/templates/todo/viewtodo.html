@@ -1,31 +1,178 @@
 {% extends 'todo/base.html' %}
 {% load static %}
 {% block content %}
+<style>
+    /* STRUCTURE */
+    a{
+    display: inline-block;
+    }  
+
+    .wrapper {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        min-height: 100%;
+        padding: 8px;
+    }
+
+    #formContent {
+        -webkit-border-radius: 10px 10px 10px 10px;
+        border-radius: 10px 10px 10px 10px;
+        background: #fff;
+        padding: 30px;
+        width: 90%;
+        max-width: 450px;
+        position: relative;
+        padding: 0px;
+        -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.1);
+        box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    #formFooter {
+        background-color: #f6f6f6;
+        border-top: 1px solid #dce8f1;
+        padding: 25px;
+        text-align: center;
+        -webkit-border-radius: 0 0 10px 10px;
+        border-radius: 0 0 10px 10px;
+    }
+
+
+    input[type=text],
+    textarea {
+        /* background-color: #f6f6f6; */
+        background-color: #F5F5F5;
+        border: none;
+        color: #0d0d0d;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 18px;
+        margin: 5px;
+        width: 85%;
+        border: 2px solid #f6f6f6;
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        -ms-transition: all 0.5s ease-in-out;
+        -o-transition: all 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out;
+        -webkit-border-radius: 5px 5px 5px 5px;
+        border-radius: 5px 5px 5px 5px;
+    }
+
+    input[type=text]:focus, textarea:focus {
+        background-color: #fff;
+        border-bottom: 2px solid #5fbae9;
+    }
+
+    input[type=text]:placeholder, textarea:focus {
+        color: #cccccc;
+    }
+
+    /* Simple CSS3 Fade-in Animation */
+    .underlineHover:after {
+        display: block;
+        left: 0;
+        bottom: -10px;
+        width: 0;
+        height: 2px;
+        background-color: #56baed;
+        content: "";
+        transition: width 0.2s;
+    }
+
+    .underlineHover:hover {
+        color: #0d0d0d;
+    }
+
+    .underlineHover:hover:after {
+        width: 100%;
+    }
+
+
+
+    /* OTHERS */
+
+    *:focus {
+        outline: none;
+    }
+
+    #icon {
+        width: 35%;
+    }
+
+    .wrapper {
+        margin-top: 6rem;
+        margin-bottom: 4rem;
+    }
+
+    .heading{
+        margin-top: 1rem;
+        margin-bottom: 1rem;
+        font-size: 30px;
+    }
+
+    #formFooter form{
+        margin-bottom: 0.5rem;
+    }
+    .create_container{
+        margin: 1rem 0;
+        padding: 0 1.5rem;
+    }
+</style>
+
     <main class="viewtodo">
-        <div class="container">
-            {% if message %}
-                <div class="alert alert-danger text-center" role="alert">
-                    {{message}}
+        <div class="wrapper fadeInDown">
+            <div id="formContent">
+                <div class="fadeIn first">
+                    <h1 class="heading text-center text-uppercase display-4">view todo</h1>
                 </div>
-            {% endif %}
-            <form action="" method="POST" class="container viewtodo-form">
-                {% csrf_token %}
-                {{form.as_p}}
-                <input type="submit" value="Save" class="btn btn-primary text-uppercase">
-            </form>
-            <div class="buttons">
-                <form action="{% url 'completed_todo' instance.id %}" method= "POST" class="container">
+                {% if error_message %}
+                    <div class="alert alert-danger text-center" role="alert" style="display: inline-block;">
+                        {{error_message}}
+                    </div>
+                {% else %}
+                    {%for message in messages%}
+                    <div class="alert alert-success text-center" role="alert" style="display: inline-block;">
+                        {{message}}
+                    </div>
+                    {% endfor %}
+                {% endif %}
+                <form action="" method="POST">
                     {% csrf_token %}
-                    <input type="submit" value="Completed" class="btn btn-success text-uppercase">
+                    {{form.title}}
+                    {{form.memo}}
+                    {{form.important.label}}
+                    {{form.important}}
+                    <br>
+                    <div class="create_container">
+                        <input type="submit" class="btn btn-lg btn-block btn-success text-uppercase" value="save">
+                    </div>
                 </form>
-                <form action="{% url 'delete_todo' instance.id %}" method= "POST" class="container">
-                    {% csrf_token %}
-                    <input type="submit" value="Delete" class="btn btn-danger text-uppercase">
-                </form>
-            </div>
-            <div class="container-fluid about-image">
-                <img src="{% static 'todo/images/publish.png' %}" alt="current todo banner" class="img-fluid">
+    
+                <div id="formFooter">
+                    <form action="{% url 'completed_todo' instance.id %}" method= "POST" class="container">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-primary btn-lg btn-block text-uppercase">mark as completed</button>
+                    </form>
+                    <form action="{% url 'delete_todo' instance.id %}" method= "POST" class="container">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-danger btn-lg btn-block text-uppercase">delete todo</button>
+                    </form>
+                </div>
+                <div id="formFooter">
+                    <a href="{% url 'current_todos' %}" class="nav-link">my pending todos</a>
+                </div>
+    
             </div>
         </div>
     </main>
+    <script>
+        document.getElementById('id_title').placeholder = "title";
+        document.getElementById('id_memo').placeholder = "description";
+    </script>
 {% endblock %}

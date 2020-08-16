@@ -1,43 +1,53 @@
 from django.shortcuts import render, redirect, get_object_or_404, get_list_or_404
-from django.contrib.auth.forms import UserCreationForm, AuthenticationForm
+from django.contrib.auth.forms import UserCreationForm, AuthenticationForm, PasswordChangeForm
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.contrib.auth import login, logout, authenticate
-from .forms import TodoForm
-from .models import Todo
+from .forms import TodoForm, MyUserCreationForm, ChangeUserProfile
+from .models import Todo, UserProfile
 from django.utils import timezone
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from .decorators import user_not_logged_in
+from django.contrib.auth import update_session_auth_hash
 
 # Create your views here.
 
 def home_page(request):
     return render(request, 'todo/home.html')
 
-def signup_user(request):
+@user_not_logged_in
+def sign_up_user(request):
     message = None
     if request.method == 'POST':
         username = request.POST['username']
         password1 = request.POST['password1']
         password2 = request.POST['password2']
-
         if password1 == password2 :
             try:
-                user = User.objects.create_user(username, password= password1)
+                form = MyUserCreationForm(request.POST)
+                if not form.is_valid():
+                    raise IntegrityError()
             except IntegrityError:
-                message = f"Sorry username {username} already exists"
+                message = f"Sorry username or email already exists"
             else:
-                user.save()
-                login(request, user)
-                return redirect('homepage')
+                form.save()
+                messages.success(request, f'account successfully created for {username}')
+                return redirect('login')
         else:
             # if password and reenter password doesnot match
             message = "Password & Password confirmation doesn't match"
+    context = {
+        'form' : MyUserCreationForm(),
+        'message' : message,
+    }
 
-    return render(request, 'todo/signup.html', {'form' : UserCreationForm(), 'message': message})
+    return render(request, 'todo/signup.html', context)
 
-def login_user(request):
+@user_not_logged_in
+def sign_in_user(request):
     form = AuthenticationForm()
-    message = None
+    error_message = None
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
@@ -46,9 +56,14 @@ def login_user(request):
             login(request, user)
             return redirect('homepage')
         else:
-            message = "username/password doesnot match"
+            error_message = "username/password doesnot match"
+
+    context = {
+        'form': form, 
+        'error_message': error_message
+    }
             
-    return render(request, 'todo/login.html', {'form': form, 'message': message})
+    return render(request, 'todo/signin.html', context)
 
 @login_required
 def logout_user(request):
@@ -59,7 +74,10 @@ def logout_user(request):
 @login_required
 def current_todos(request):
     todos = Todo.objects.filter(user= request.user, datecompleted__isnull= True).order_by('-created')
-    return render(request, 'todo/currenttodos.html', {'todos': todos})
+    context = {
+        'todos': todos
+    }
+    return render(request, 'todo/currenttodos.html', context)
 
 @login_required
 def create_todo(request):
@@ -76,23 +94,34 @@ def create_todo(request):
             new_form.save()
             return redirect('current_todos')
 
-    return render(request, 'todo/createtodo.html', {'form': form, 'message': message})
+    context = {
+        'form': form, 
+        'message': message
+    }
+
+    return render(request, 'todo/createtodo.html', context)
 
 @login_required
 def view_todo(request, todo_id):
     instance = get_object_or_404(Todo, pk= todo_id, user= request.user)
-    message = None
+    error_message = None
     if request.method == 'POST':
         try:
             form = TodoForm(request.POST, instance= instance)
             form.save()
         except ValueError:
-            message = "inputs given were wrong"
+            error_message = "inputs given were wrong"
         else:
-            return redirect('current_todos')
-
+            messages.success(request, 'todo saved')
+            
     form = TodoForm(instance= instance)
-    return render(request, 'todo/viewtodo.html', {'instance' : instance, 'form' : form, 'message': message})
+    context ={
+        'instance' : instance, 
+        'form' : form, 
+        'error_message': error_message
+    }
+
+    return render(request, 'todo/viewtodo.html', context)
 
 @login_required
 def completed_todo(request, todo_id):
@@ -116,7 +145,11 @@ def completed_todos(request):
         todos = Todo.objects.filter(user= request.user, datecompleted__isnull= False).order_by('-datecompleted')
     except Exception:
         todos = None
-    return render(request, 'todo/mycompletedtodos.html', {'todos':todos})
+    
+    context = {
+        'todos':todos,
+    }
+    return render(request, 'todo/mycompletedtodos.html', context)
 
 @login_required
 def unfinish_todo(request, todo_id):
@@ -132,3 +165,47 @@ def delete_todo_completed(request, todo_id):
         instance = get_object_or_404(Todo, pk= todo_id, user= request.user)
         instance.delete()
         return redirect('completed_todos')
+
+@login_required
+def profile(request):
+    message = None
+    userprofile = UserProfile.objects.get(user= request.user)
+    if request.method == 'POST':
+        form = ChangeUserProfile(request.POST, request.FILES, instance= userprofile)
+        if form.is_valid():
+            form.save()
+            message = 'profile picture updated'
+
+    form = ChangeUserProfile(instance= userprofile)
+    total_todos = Todo.objects.filter(user= request.user).count()
+    pending_todos = Todo.objects.filter(user= request.user, datecompleted__isnull= True).count()
+    completed_todos = Todo.objects.filter(user= request.user, datecompleted__isnull= False).count()
+    
+    context = {
+        'total_todos' : total_todos,
+        'pending_todos' : pending_todos,
+        'completed_todos' : completed_todos,
+        'form' : form,
+        'message' : message,
+    }
+
+    return render(request, 'todo/profile.html', context)
+
+@login_required
+def change_password(request):
+    message = None
+    if request.method == 'POST':
+        form = PasswordChangeForm(data= request.POST, user= request.user)
+        if form.is_valid():
+            form.save()
+            update_session_auth_hash(request, form.user)
+            message = 'password changed successfully'
+        else:
+            message = 'password change failed'
+
+    form = PasswordChangeForm(user= request.user)
+    context = {
+        'form' : form,
+        'message' : message,
+    }
+    return render(request, 'todo/change_password.html', context)

@@ -1,0 +1,54 @@
+{% extends 'todo/base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    /* STRUCTURE */
+    :root{
+    --roboto: 'Roboto', sans-serif;
+    --lato: 'Lato', sans-serif;
+    }
+
+    .title{
+        font: normal 500 30px var(--roboto);
+    }
+
+    p{
+        font: normal 200 18px var(--roboto);
+    }
+
+    .wrapper {
+        display: flex;
+        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        width: 100%;
+        min-height: 100%;
+        padding: 8px;
+    }
+
+    .wrapper {
+        margin-top: 8rem;
+        margin-bottom: 2rem;
+    }
+</style>
+    <main class="reset">
+        <div class="wrapper">
+            <div class="card" style="width: 20rem;">
+                <div class="card-body">
+                  <h5 class="card-title title">Reset Password</h5>
+                  <h6 class="card-subtitle mb-2 text-muted">check your email</h6>
+                  <p class="card-text">
+                    We’ve emailed you instructions for setting your password, if an account exists with the email you entered. You should receive them shortly.
+                  </p>
+                  <p class="card-text">
+                    If you don’t receive an email, please make sure you’ve entered the address you registered with, and check your spam folder.
+                  </p>
+                  <a href="{% url 'login' %}" class="card-link">sign in</a>
+                </div>
+              </div>
+        </div>
+        <div class="container-fluid about-image text-center">
+            <img src="{% static 'images/email.png' %}" alt="email" class="img-fluid">
+        </div>
+    </main>
+{% endblock %}

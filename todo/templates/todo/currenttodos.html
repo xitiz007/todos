@@ -8,15 +8,16 @@
                 <h1 class="text-uppercase">Pending todos</h1>
             </div>
             {% if not todos %}
-                <div class="container-fluid about-image">
-                    <img src="{% static 'todo/images/currenttodo.png' %}" alt="current todo banner" class="img-fluid">
-                </div>
                 <div class="alert alert-warning text-center" role="alert">
                     Looks like you don't have any pending todos yet
                 </div>
                 <div class="text-center">
                     <a href="{% url 'create' %}">create new todo</a>
                 </div>
+                <div class="container-fluid about-image">
+                    <img src="{% static 'images/currenttodo-icon.png' %}" alt="current todo banner" class="img-fluid">
+                </div>
+                
             {% else %}
                 <div class="list-group">
                     {% for todo in todos %}
@@ -48,14 +49,12 @@
                     {% endfor %}
                 </div>
                 <div class="create-todo text-center">
-                <a href="{% url 'create' %}" class="text-decoration-none">Create todo</a>
+                <a href="{% url 'create' %}" class="nav-link">Create todo</a>
                 </div>
                 <div class="container">
-                    <div class="col-lg-6 col-md-12">
                         <div class="about-image">
-                            <img src="{% static 'todo/images/phonelist.png' %}" alt="task list" class="img-fluid">
+                            <img src="{% static 'images/phonelist-icon.png' %}" alt="task list" class="img-fluid">
                         </div>
-                    </div>
                 </div>
             {% endif %}
     </main>

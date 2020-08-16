@@ -1,32 +1,152 @@
 {% extends 'todo/base.html' %}
 {% load static %}
 {% block content %}
+<style>
+    a{
+        display: inline-block;
+    }    
+        /* STRUCTURE */
+
+        .wrapper {
+        display: flex;
+        align-items: center;
+        flex-direction: column; 
+        justify-content: center;
+        width: 100%;
+        min-height: 100%;
+        padding: 8px;
+        }
+
+        #formContent {
+        -webkit-border-radius: 10px 10px 10px 10px;
+        border-radius: 10px 10px 10px 10px;
+        background: #fff;
+        padding: 30px;
+        width: 90%;
+        max-width: 450px;
+        position: relative;
+        padding: 0px;
+        -webkit-box-shadow: 0 30px 60px 0 rgba(0,0,0,0.1);
+        box-shadow: 0 30px 60px 0 rgba(0,0,0,0.1);
+        text-align: center;
+        }
+
+        #formFooter {
+        background-color: #f6f6f6;
+        border-top: 1px solid #dce8f1;
+        padding: 25px;
+        text-align: center;
+        -webkit-border-radius: 0 0 10px 10px;
+        border-radius: 0 0 10px 10px;
+        }
+
+        input[type=text], input[type=password], input[type=email] {
+        background-color: #f6f6f6;
+        border: none;
+        color: #0d0d0d;
+        padding: 15px 32px;
+        text-align: center;
+        text-decoration: none;
+        display: inline-block;
+        font-size: 16px;
+        margin: 5px;
+        width: 85%;
+        border: 2px solid #f6f6f6;
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        -ms-transition: all 0.5s ease-in-out;
+        -o-transition: all 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out;
+        -webkit-border-radius: 5px 5px 5px 5px;
+        border-radius: 5px 5px 5px 5px;
+        }
+
+        input[type=text]:focus {
+        background-color: #fff;
+        border-bottom: 2px solid #5fbae9;
+        }
+
+        input[type=text]:placeholder {
+        color: #cccccc;
+        }
+
+        /* Simple CSS3 Fade-in Animation */
+        .underlineHover:after {
+        display: block;
+        left: 0;
+        bottom: -10px;
+        width: 0;
+        height: 2px;
+        background-color: #56baed;
+        content: "";
+        transition: width 0.2s;
+        }
+
+        .underlineHover:hover {
+        color: #0d0d0d;
+        }
+
+        .underlineHover:hover:after{
+        width: 100%;
+        }
+
+
+
+        /* OTHERS */
+
+        *:focus {
+            outline: none;
+        } 
+
+        #icon {
+        width:35%;
+        margin: 8px 0;
+        }
+
+        .wrapper{
+            margin-top: 8rem;
+            margin-bottom: 4rem;
+        }
+
+        .create_container{
+            margin: 1rem 0;
+            padding: 0 2rem;
+        }
+
+    </style>
     <main class="signup-user">
-        <div class="container">
-            <div class="text-center">
-                <h1 class="page-title text-uppercase">create an account</h1>
-            </div>
-            {% if message %}
-                <div class="alert alert-danger text-center" role="alert">
-                    {{message}}
-                </div>
-            {% endif %}
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-6 col-md-12">
-                        <form action="" method="POST" class="container">
-                            {% csrf_token %}
-                            {{form.as_p}}
-                            <input type="submit" value="submit" class="btn btn-primary text-uppercase">
-                        </form>
+            <div class="wrapper fadeInDown">
+                <div id="formContent">
+                    <div class="fadeIn first">
+                        <img src="{% static 'images/list-icon.png' %}" id="icon" alt="User Icon" />
                     </div>
-                    <div class="col-lg-6 col-md-12 about-title">
-                        <div class="container-fluid about-image">
-                            <img src="{% static 'todo/images/forms.png' %}" alt="current todo banner" class="img-fluid">
+                    {% if message %}
+                        <div class="alert alert-danger text-center" role="alert" style="display: inline-block;">
+                            {{message}}
                         </div>
+                    {% endif %}
+                    <form action="" method="POST">
+                        {% csrf_token %}
+                        {{form.username}}
+                        {{form.email}}
+                        {{form.password1}}
+                        {{form.password2}}
+                        <div class="create_container">
+                            <input type="submit" class="btn btn-lg btn-block btn-success text-uppercase" value="create account">
+                        </div>
+                    </form>
+                
+                    <div id="formFooter">
+                        <a class="underlineHover" href="{% url 'login' %}">Sign in</a>
                     </div>
+                
                 </div>
             </div>
-        </div>
     </main>
+    <script>
+        document.getElementById('id_username').placeholder="username";
+        document.getElementById('id_email').placeholder="email";
+        document.getElementById('id_password1').placeholder="password";
+        document.getElementById('id_password2').placeholder="password confirmation";
+    </script>
 {% endblock %}

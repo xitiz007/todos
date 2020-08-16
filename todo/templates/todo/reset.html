@@ -1,8 +1,17 @@
 {% extends 'todo/base.html' %}
 {% load static %}
 {% block content %}
-
 <style>
+    /* STRUCTURE */
+    :root{
+    --roboto: 'Roboto', sans-serif;
+    --lato: 'Lato', sans-serif;
+    }
+
+    a{
+        display: inline-block;
+    }  
+
     .wrapper {
         display: flex;
         align-items: center;
@@ -36,8 +45,33 @@
         border-radius: 0 0 10px 10px;
     }
 
-    input[type=text],
-    textarea {
+
+
+    /* TABS */
+
+    h2.inactive {
+        color: #cccccc;
+    }
+
+    h2.active {
+        color: #0d0d0d;
+        border-bottom: 2px solid #5fbae9;
+    }
+
+
+
+    /* FORM TYPOGRAPHY*/
+
+    input[type=email]:active
+    {
+        -moz-transform: scale(0.95);
+        -webkit-transform: scale(0.95);
+        -o-transform: scale(0.95);
+        -ms-transform: scale(0.95);
+        transform: scale(0.95);
+    }
+
+    input[type=email]{
         background-color: #F5F5F5;
         border: none;
         color: #0d0d0d;
@@ -58,36 +92,15 @@
         border-radius: 5px 5px 5px 5px;
     }
 
-    input[type=text]:focus, textarea:focus {
+    input[type=email]:focus
+    {
         background-color: #fff;
         border-bottom: 2px solid #5fbae9;
     }
 
-    input[type=text]:placeholder, textarea:focus {
+    input[type=email]:placeholder{
         color: #cccccc;
     }
-
-    /* Simple CSS3 Fade-in Animation */
-    .underlineHover:after {
-        display: block;
-        left: 0;
-        bottom: -10px;
-        width: 0;
-        height: 2px;
-        background-color: #56baed;
-        content: "";
-        transition: width 0.2s;
-    }
-
-    .underlineHover:hover {
-        color: #0d0d0d;
-    }
-
-    .underlineHover:hover:after {
-        width: 100%;
-    }
-
-
 
     /* OTHERS */
 
@@ -101,7 +114,7 @@
 
     .wrapper {
         margin-top: 8rem;
-        margin-bottom: 4rem;
+        margin-bottom: 2rem;
     }
 
     .heading{
@@ -110,43 +123,35 @@
         font-size: 30px;
     }
 
+    .reset_password{
+        margin: 2rem 0;
+    }
+
     .create_container{
-        margin: 1rem 0;
-        padding: 0 1.5rem;
+    margin: 1rem 0;
+    padding: 0 2.2rem;
     }
 </style>
-<main class="create-todo">
-    <div class="wrapper fadeInDown">
-        <div id="formContent">
-            <div class="fadeIn first">
-                <h1 class="heading text-center text-uppercase display-4">create todo</h1>
-            </div>
-            {% if message %}
-            <div class="alert alert-danger text-center" role="alert" style="display: inline-block;">
-                {{message}}
-            </div>
-            {% endif %}
-            <form action="" method="POST">
-                {% csrf_token %}
-                {{form.title}}
-                {{form.memo}}
-                {{form.important.label}}
-                {{form.important}}
-                <br>
-                <div class="create_container">
-                    <input type="submit" class="btn btn-lg btn-block btn-success text-uppercase" value="Create">
+    <main class="reset">
+        <div class="wrapper fadeInDown">
+            <div id="formContent">
+                <div class="fadeIn first">
+                    <h1 class="heading text-center text-uppercase display-4">reset password</h1>
                 </div>
-            </form>
-
-            <div id="formFooter">
-                <a class="underlineHover" href="{% url 'current_todos' %}">my pending todos</a>
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{form.email}}
+                    <div class="create_container">
+                        <input type="submit" class="btn btn-lg btn-block btn-warning text-uppercase" value="reset password">
+                    </div>
+                </form>
             </div>
-
         </div>
-    </div>
-</main>
-<script>
-    document.getElementById('id_title').placeholder = "title";
-    document.getElementById('id_memo').placeholder = "description";
-</script>
+        <div class="container-fluid about-image text-center">
+            <img src="{% static 'images/email.png' %}" alt="email" class="img-fluid">
+        </div>
+    </main>
+    <script>
+        document.getElementById('id_email').placeholder = "your email";
+    </script>
 {% endblock %}

@@ -1,0 +1,88 @@
+{% extends 'todo/base.html' %}
+{% block content %}
+<style>
+    :root{
+    --roboto: 'Roboto', sans-serif;
+    --lato: 'Lato', sans-serif;
+    }
+    .profile-pic{
+		max-width: 200px;
+        /* max-height: 200px; */
+        margin: 7px auto;
+        margin-bottom: 2rem;
+    }
+    .user_profile{
+        margin-top: 10rem;
+        margin-bottom: 10rem;
+    }
+    main.user_profile ul li{
+        font: normal 400 22px var(--lato);
+    }
+    .label{
+        font: normal 100 23px var(--roboto);
+        color: #0000EE;
+    }
+    .heading{
+        font: normal 500 30px var(--roboto);
+    }
+
+    .column{
+        margin-bottom: 2rem;
+    }
+
+    .change-password{
+        margin-top: 1rem;
+        padding: 0 2px;
+    }
+    .card, .list-group-item{
+        background-color:rgba(250, 249, 249, 1);
+        
+    }
+    .card{
+        box-shadow: 12px 12px 2px 1px rgba(0, 0, 0, 0.04);
+    }
+    .change_profile_picture{
+        margin: 10px 0;
+    }
+</style>
+<main class="user_profile">
+<div class="container">
+    <div class="row">
+      <div class="col-sm column">
+        <div class="card card-body">
+            <img src="{{user.userprofile.profile_picture.url}}" alt="profile picture" class="profile-pic">
+            <form action="" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="text-center">
+                {{form.profile_picture}}
+                </div>
+                {% if message %}
+                    <div class="alert alert-success text-center" role="alert" style="margin-top: 10px;">
+                        {{message}}
+                    </div>
+            {% endif %}
+                <input type="submit" value="update profile picture" class="change_profile_picture btn btn-primary btn-lg btn-block">
+            </form>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><span class= 'label'>username :</span> {{user.username}}</li>
+                <li class="list-group-item"><span class= 'label'>email :</span> {{user.email}}</li>
+              </ul>
+        </div>
+      </div>
+      <div class="col-sm column">
+        <div class="card card-body">
+            <h1 class="heading text-uppercase">User Profile</h1>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><span class= 'label'>total todos :</span> {{total_todos}}</li>
+                <li class="list-group-item"><span class= 'label'>pending todos :</span> {{pending_todos}}</li>
+                <li class="list-group-item"><span class= 'label'>completed todos :</span> {{completed_todos}}</li>
+              </ul>
+        </div>
+        <div class="change-password">
+            <a href= "{% url 'change_password' %}" class="btn btn-primary btn-lg btn-block">change account password</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
