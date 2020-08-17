@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from PIL import Image
 
 # Create your models here.
 
@@ -19,7 +20,14 @@ class Todo(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete= models.CASCADE, null= True)
-    profile_picture = models.ImageField(default= 'user.png', null= True)
+    profile_picture = models.ImageField(default= 'user.png', upload_to= 'profile_pictures', null= True)
 
     def __str__(self):
         return self.user.username
+
+    def save(self, *args, **kwargs):
+        super().save()
+        image = Image.open(self.profile_picture.path)
+        if image.height > 200 or image.width > 200 :
+            image.thumbnail((200, 200))
+            image.save(self.profile_picture.path)
