@@ -20,7 +20,7 @@ class Todo(models.Model):
 
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete= models.CASCADE, null= True)
-    profile_picture = models.ImageField(default= 'user.png', upload_to= 'profile_pictures', null= True)
+    profile_picture = models.ImageField(default= 'user.png', upload_to= 'images', null= True)
 
     def __str__(self):
         return self.user.username
